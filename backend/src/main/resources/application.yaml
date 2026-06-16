@@ -1,0 +1,54 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /identity
+
+spring:
+  application:
+    name: ai_system
+
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=AI_STUDY_HUB;encrypt=true;trustServerCertificate=true
+    username: sa
+    password: 12345
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
+
+    show-sql: true
+
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServerDialect
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: nguyendangtam2102@gmail.com
+    password: suwkywwlkwmbvwlk
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 192187096311-d72gfq3ebhsqfknf42s1np98u2hgv6ht.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - email
+              - profile
+  logging:
+    level:
+      org.springframework.security: DEBUG
+
+jwt:
+  signerToken: "llasDxFCbJoRKiy%hr8K0nybrD$t@rYuKR#R^fdYGt4="
+

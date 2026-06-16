@@ -27,7 +27,8 @@ public enum ErrorCode {
     EMAIL_INVALID(2014, "Your email invalid", HttpStatus.BAD_REQUEST),
 
     UNAUTHENTICATED(1001, "Authenticated", HttpStatus.FORBIDDEN),
-    UNAUTHORIZED(1002, "No permission", HttpStatus.FORBIDDEN)
+    UNAUTHORIZED(1002, "No permission", HttpStatus.FORBIDDEN),
+    TOKEN_INVALID(1003, "Your token is invalid", HttpStatus.FORBIDDEN),
     ;
 
     int code;

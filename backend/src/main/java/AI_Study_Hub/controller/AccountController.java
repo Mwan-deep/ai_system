@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/account")
+@RequestMapping("/api/account")
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class AccountController {
@@ -70,6 +70,13 @@ public class AccountController {
         var result = accountService.createAccountByAdmin(request);
         return ApiResponse.<AccountResponse>builder()
                 .message("Create Successfully!!!")
+                .result(result)
+                .build();
+    }
+    @GetMapping("/infor/{id}")
+    ApiResponse<AccountResponse> GetInforAccount(@PathVariable Long id){
+        var result = accountService.GetAccountById(id);
+        return ApiResponse.<AccountResponse>builder()
                 .result(result)
                 .build();
     }
