@@ -26,7 +26,11 @@ public class SecurityConfig {
             "/authen",
             "/authen/introspec",
             "/auth/**",
-            "/api/v1/share/download/**" // <--- THÊM DÒNG NÀY CỦA CHÚNG TA VÀO
+            "/api/v1/share/download/**", // <--- THÊM DÒNG NÀY CỦA CHÚNG TA VÀO
+
+            // --- THÊM 2 DÒNG NÀY ---
+            "/api/v1/master-data/**",
+            "/api/v1/rankings/**"
     };
     static String[] MUST_BE_AUTHENTICATE = {"/account/change-password", "/authen/logout"};
 

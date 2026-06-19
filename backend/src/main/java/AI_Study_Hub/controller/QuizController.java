@@ -2,13 +2,16 @@ package AI_Study_Hub.controller;
 
 import AI_Study_Hub.dto.QuizResponseDTO;
 import AI_Study_Hub.dto.QuizSubmitRequest;
+import AI_Study_Hub.entity.Account;
 import AI_Study_Hub.entity.Quiz;
 import AI_Study_Hub.entity.QuizAttempt;
+import AI_Study_Hub.repository.AccountRepository;
 import AI_Study_Hub.service.QuizGeneratorService;
 import AI_Study_Hub.service.QuizGradingService;
 import AI_Study_Hub.service.QuizQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -23,15 +26,19 @@ public class QuizController {
     private final QuizGradingService quizGradingService;
     // Khai báo thêm ở đầu class Controller
     private final QuizQueryService quizQueryService;
+    private final AccountRepository accountRepository;
 
-    // 1. API Sinh đề thi (Đã có sẵn)
+    // 1. API Sinh đề thi (Đã bảo mật)
     @PostMapping("/generate")
     public ResponseEntity<?> generateQuiz(
             @RequestParam("materialId") Long materialId,
-            @RequestParam("accountId") Long accountId,
             @RequestParam(value = "quantity", defaultValue = "5") int quantity) {
         try {
-            Quiz quiz = quizGeneratorService.generateQuizFromMaterial(materialId, accountId, quantity);
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
+            Account currentUser = accountRepository.findByUserName(username)
+                    .orElseThrow(() -> new RuntimeException("Lỗi định danh"));
+
+            Quiz quiz = quizGeneratorService.generateQuizFromMaterial(materialId, currentUser.getAccountId(), quantity);
 
             Map<String, Object> response = new HashMap<>();
             response.put("quizId", quiz.getQuizId());

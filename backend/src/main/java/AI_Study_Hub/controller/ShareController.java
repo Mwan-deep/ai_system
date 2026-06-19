@@ -1,6 +1,8 @@
 package AI_Study_Hub.controller;
 
+import AI_Study_Hub.entity.Account;
 import AI_Study_Hub.entity.StudyMaterial;
+import AI_Study_Hub.repository.AccountRepository;
 import AI_Study_Hub.service.GoogleDriveService;
 import AI_Study_Hub.service.ShareService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -20,17 +23,21 @@ public class ShareController {
 
     private final ShareService shareService;
     private final GoogleDriveService googleDriveService;
+    private final AccountRepository accountRepository; // Thêm repo để tra cứu user
 
-    // 1. API: Chủ tài liệu yêu cầu tạo Link chia sẻ
+    // 1. API: Chủ tài liệu yêu cầu tạo Link chia sẻ (Đã bảo mật)
     @PostMapping("/generate")
     public ResponseEntity<?> generateLink(
             @RequestParam("materialId") Long materialId,
-            @RequestParam("accountId") Long accountId, // Cập nhật thành accountId
             @RequestParam(value = "expireDays", required = false) Integer expireDays) {
         try {
-            String token = shareService.generateShareLink(materialId, accountId, expireDays);
+            // TỰ ĐỘNG TRÍCH XUẤT ACCOUNT ID TỪ TOKEN
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
+            Account currentUser = accountRepository.findByUserName(username)
+                    .orElseThrow(() -> new RuntimeException("Lỗi định danh người dùng"));
 
-            // Ghép Token vào một URL hoàn chỉnh
+            String token = shareService.generateShareLink(materialId, currentUser.getAccountId(), expireDays);
+
             String shareUrl = "http://localhost:8080/api/v1/share/download/" + token;
 
             Map<String, String> response = new HashMap<>();

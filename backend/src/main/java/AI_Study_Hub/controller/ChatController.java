@@ -1,8 +1,11 @@
 package AI_Study_Hub.controller;
 
+import AI_Study_Hub.entity.Account;
+import AI_Study_Hub.repository.AccountRepository;
 import AI_Study_Hub.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -14,11 +17,12 @@ import java.util.Map;
 public class ChatController {
 
     private final ChatService chatService;
+    private final AccountRepository accountRepository;
+
 
     // API: Gửi câu hỏi cho AI (Có lưu lịch sử)
     @PostMapping("/ask")
     public ResponseEntity<?> askAI(
-            @RequestParam("accountId") Long accountId,
             @RequestParam("materialId") Long materialId,
             @RequestParam("prompt") String prompt) {
 
@@ -27,11 +31,14 @@ public class ChatController {
         }
 
         try {
-            // Gọi tổng quản lý xử lý toàn bộ luồng RAG và Lưu trữ
-            String aiResponse = chatService.processUserMessage(accountId, materialId, prompt);
+            // Bảo mật JWT
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
+            Account currentUser = accountRepository.findByUserName(username)
+                    .orElseThrow(() -> new RuntimeException("Lỗi định danh"));
+
+            String aiResponse = chatService.processUserMessage(currentUser.getAccountId(), materialId, prompt);
 
             Map<String, Object> response = new HashMap<>();
-            response.put("accountId", accountId);
             response.put("materialId", materialId);
             response.put("question", prompt);
             response.put("answer", aiResponse);

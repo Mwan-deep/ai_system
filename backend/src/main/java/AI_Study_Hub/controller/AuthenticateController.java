@@ -1,6 +1,6 @@
 package AI_Study_Hub.controller;
 
-import AI_Study_Hub.dto.request.ApiResponse;
+import AI_Study_Hub.dto.response.ApiResponse;
 import AI_Study_Hub.dto.request.AuthenticateRequest;
 import AI_Study_Hub.dto.request.IntroSpecRequest;
 import AI_Study_Hub.dto.request.LogoutRequest;

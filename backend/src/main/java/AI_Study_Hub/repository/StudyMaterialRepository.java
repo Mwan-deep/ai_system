@@ -26,4 +26,10 @@ public interface StudyMaterialRepository extends JpaRepository<StudyMaterial, Lo
             "LOWER(s.subject.subjectName) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
             "LOWER(s.subject.subjectCode) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<StudyMaterial> searchMaterials(@Param("keyword") String keyword);
+
+    // Thuật toán: Lấy Top 10 tài liệu có lượt tải xuống cao nhất
+    List<StudyMaterial> findTop10ByOrderByDownloadCountDesc();
+
+    // Thuật toán: Lấy Top 10 tài liệu có lượt xem cao nhất
+    List<StudyMaterial> findTop10ByOrderByViewCountDesc();
 }
