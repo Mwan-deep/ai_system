@@ -35,3 +35,5 @@ build/
 .env
 application.properties
 src/main/resources/application.properties
+
+backend/src/main/resources/application-local.yaml

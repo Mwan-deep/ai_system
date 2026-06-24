@@ -2,7 +2,7 @@ package AI_Study_Hub.controller;
 
 import AI_Study_Hub.dto.request.AccountCreateRequest;
 import AI_Study_Hub.dto.request.AccountUpdateRequest;
-import AI_Study_Hub.dto.request.ApiResponse;
+import AI_Study_Hub.dto.response.ApiResponse;
 import AI_Study_Hub.dto.request.ChangePasswordRequest;
 import AI_Study_Hub.dto.response.AccountResponse;
 import AI_Study_Hub.dto.response.ChangePasswordResponse;
@@ -10,7 +10,6 @@ import AI_Study_Hub.entity.Account;
 import AI_Study_Hub.service.AccountService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;

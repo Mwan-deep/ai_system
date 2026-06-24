@@ -1,6 +1,6 @@
 package AI_Study_Hub.controller;
 
-import AI_Study_Hub.dto.request.ApiResponse;
+import AI_Study_Hub.dto.response.ApiResponse;
 import AI_Study_Hub.dto.request.ForgetPasswordRequest;
 import AI_Study_Hub.dto.request.ResetPasswordRequest;
 import AI_Study_Hub.service.OtpService;

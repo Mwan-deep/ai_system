@@ -1,6 +1,6 @@
 package AI_Study_Hub.config;
 
-import AI_Study_Hub.dto.request.ApiResponse;
+import AI_Study_Hub.dto.response.ApiResponse;
 import AI_Study_Hub.exception.ErrorCode;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

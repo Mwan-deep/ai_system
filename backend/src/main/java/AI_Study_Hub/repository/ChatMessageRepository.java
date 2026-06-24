@@ -10,4 +10,6 @@ import java.util.List;
 public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> {
     // Lấy toàn bộ tin nhắn trong 1 phiên chat, sắp xếp theo thời gian gửi (cũ nhất hiện trước)
     List<ChatMessage> findByChatSession_SessionIdOrderByCreatedAtAsc(Long sessionId);
+    // Thêm vào ChatMessageRepository.java
+    List<ChatMessage> findTop5ByChatSession_SessionIdOrderByCreatedAtDesc(Long sessionId);
 }

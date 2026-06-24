@@ -1,4 +1,4 @@
-package AI_Study_Hub.dto.request;
+package AI_Study_Hub.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;

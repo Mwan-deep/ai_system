@@ -1,6 +1,9 @@
 package AI_Study_Hub.controller;
 
-import AI_Study_Hub.dto.request.*;
+import AI_Study_Hub.dto.response.ApiResponse;
+import AI_Study_Hub.dto.request.AuthenticateRequest;
+import AI_Study_Hub.dto.request.IntroSpecRequest;
+import AI_Study_Hub.dto.request.LogoutRequest;
 import AI_Study_Hub.dto.response.AuthenticateResponse;
 import AI_Study_Hub.dto.response.IntroSpecResponse;
 import AI_Study_Hub.service.AuthenticateService;
@@ -16,7 +19,7 @@ import java.text.ParseException;
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@RequestMapping("/api/authen")
+@RequestMapping("/authen")
 public class AuthenticateController {
 
     @Autowired
@@ -26,14 +29,6 @@ public class AuthenticateController {
     ApiResponse<AuthenticateResponse> authenticate (@RequestBody AuthenticateRequest request){
         var result = authenticateService.authenticate(request);
         return ApiResponse.<AuthenticateResponse>builder()
-                .message("Login Successfully!!!")
-                .result(result)
-                .build();
-    }
-    @PostMapping("/verifyOtp2Layer")
-    ApiResponse<AuthenticateResponse> verifyOtp2Layer(@RequestBody OtpNewDeviceRequest request){
-        var result = authenticateService.verifyOtpNewDevice(request);
-        return ApiResponse.<AuthenticateResponse>builder()
                 .result(result)
                 .build();
     }
@@ -41,7 +36,6 @@ public class AuthenticateController {
     ApiResponse<IntroSpecResponse> introSpec (@RequestBody IntroSpecRequest request) throws ParseException, JOSEException {
         var result = authenticateService.introSpec(request);
         return ApiResponse.<IntroSpecResponse>builder()
-                .message("IntroSpec Successfully!!!")
                 .result(result)
                 .build();
     }
