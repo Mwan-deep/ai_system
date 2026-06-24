@@ -22,8 +22,6 @@ public class EmailService {
             simpleMailMessage.setFrom("nguyendangtam2102@gmail.com");
 
             javaMailSender.send(simpleMailMessage);
-
-            System.out.println("MAIL SENT");
         }
         catch (Exception e){
             e.printStackTrace();

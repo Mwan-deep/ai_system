@@ -34,7 +34,7 @@ public class OtpService {
     //Kiem tra so lan user nhap sai
     Map<String, Integer> attempts = new HashMap<>();
 
-    private String generarteOtp(){
+    public String generarteOtp(){
         Random random = new Random();
         int otp = 100000 + (random.nextInt(900000));
         return String.valueOf(otp);
@@ -64,8 +64,15 @@ public class OtpService {
 
         emailService.sendGmail(
                 request.getGmail(),
-                "Reset Password OTP" ,
-                "Your OTP is: " + otp + "(valid in 1 minute)"
+                "AI Study Hub | Password Reset Verification",
+                "Dear User,\n\n" +
+                        "We received a request to reset the password for your AI Study Hub account.\n\n" +
+                        "To proceed with the password reset, please use the following One-Time Password (OTP):\n\n" +
+                        "OTP: " + otp + "\n\n" +
+                        "This code is valid for 1 minute. For your security, please do not share this code with anyone.\n\n" +
+                        "If you did not request a password reset, please ignore this email or contact our support team immediately.\n\n" +
+                        "Best regards,\n" +
+                        "AI Study Hub Security Team"
         );
     }
 
@@ -83,6 +90,7 @@ public class OtpService {
         // 2. init attempts
         int count = attempts.getOrDefault(request.getGmail(), 0);
         if(count >= 5){
+            attempts.remove(request.getGmail());
             throw new AppException(ErrorCode.TOO_MANY_REQUEST);
         }
 

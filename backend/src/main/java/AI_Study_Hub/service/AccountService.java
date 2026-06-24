@@ -56,6 +56,8 @@ public class AccountService {
 
             account.setAccountStatus("ACTIVE");
 
+            account.setUserName(null);
+
             account = accountRespository.save(account);
 
             return accountMapper.toAccountResponse(account);
@@ -140,7 +142,16 @@ public class AccountService {
 
         account.setRoles(roles);
 
-        return accountMapper.toAccountResponse(accountRespository.save(account));
+        account.setAccountStatus("ACTIVE");
 
+        account.setUserName(null);
+
+        return accountMapper.toAccountResponse(accountRespository.save(account));
+    }
+    public AccountResponse GetAccountById(Long id){
+        Account  account = accountRespository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_EXITS));
+
+        return accountMapper.toAccountResponse(account);
     }
 }
